@@ -38,8 +38,10 @@ add_executable(main
 	./api/lookfor9_constants.h
 	./api/lookfor9_types.h
 	./api/Api.h
+	./client.h
 	./api/lookfor9_constants.cpp
 	./api/lookfor9_types.cpp
+	./client.cpp
 	./api/Api.cpp
 	main.cpp
 )

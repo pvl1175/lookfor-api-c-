@@ -1,57 +1,41 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <algorithm>
 
-#include <thrift/stdcxx.h>
-#include <thrift/transport/TSocket.h>
-#include <thrift/transport/TBufferTransports.h>
-#include <thrift/protocol/TBinaryProtocol.h>
-
-#include "api/Api.h"
-
-using namespace apache::thrift::transport;
-using namespace apache::thrift::protocol;
-using namespace lookfor9::api;
+#include "client.h"
 
 int main()
 {
-	std::shared_ptr<TSocket> socket = std::shared_ptr<TSocket>(new TSocket("127.0.0.1", 9090));
-	std::shared_ptr<TTransport> transport = std::shared_ptr<TTransport>(new TBufferedTransport(socket));
-	std::shared_ptr<TProtocol> protocol = std::shared_ptr<TProtocol>(new TBinaryProtocol(transport));
-	std::shared_ptr<ApiClient> api = std::shared_ptr<ApiClient>(new ApiClient(protocol));
+	_setmode(_fileno(stdout), _O_U16TEXT);
+	_setmode(_fileno(stdin), _O_U16TEXT);
+	_setmode(_fileno(stderr), _O_U16TEXT);
+
 
 	try
 	{
-		transport->open();
-		std::cout << "Transport opened" << std::endl;
+		client c("127.0.0.1", 9090);
 
-		std::string h{};
-		api->Hello(h);
-		std::cout << h << std::endl;
+		c.hello();
+		// 0 is the root
+		std::wcout << L"Tree traverse:" << std::endl;
+		std::wcout << L"you can uncomment the tree traverse" << std::endl;
+		c.tree_traverse(0, 1);
 
-		std::string ph{ "9196315221" };
-		std::string ph_info{};
-		api->PhoneInfo(ph_info, ph);
-		std::cout << ph_info << std::endl;
+		std::wcout << std::wstring(100, L'*') << std::endl;
+		std::wcout << L"Ads by tree (1 rooms) buy:" << std::endl;
+		c.ads_by_tree_index(4547, 10);
 
-		std::vector<TreeInfo> ti_list;
-		api->TreeChildren(ti_list, 0);
+		std::wcout << std::wstring(100, L'*') << std::endl;
+		std::wcout << L"Ads by tree (1 rooms) rent:" << std::endl;
+		c.ads_by_tree_index(4548, 10);
 
-		std::for_each(ti_list.begin(), ti_list.end(), [](auto ti)
-		{
-			std::cout << ti.Id << ", " << ti.Name << std::endl;
-		});
+		std::wcout << std::wstring(100, L'*') << std::endl;
+		std::wcout << L"Ads by tree (dacha) buy:" << std::endl;
+		c.ads_by_tree_index(4374, 10);
 	}
 	catch (...)
 	{
-		printf("thrift error: failed connect to node\n");
-	}
-
-	if (transport->isOpen())
-	{
-		transport->close();
-		std::cout << "Transport closed" << std::endl;
+		std::exception("thrift error: failed connect to node\n");
 	}
 }
 
