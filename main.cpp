@@ -13,7 +13,7 @@ int main()
 
 	try
 	{
-		client c("127.0.0.1", 9090);
+		client c("92.255.199.79", 9090);
 
 		c.hello();
 		// 0 is the root
