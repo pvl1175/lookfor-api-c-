@@ -35,5 +35,6 @@ public:
 	void hello();
 	void tree_traverse(int index, int printLayer);
 	void ads_by_tree_index(int index, short rowsCount);
+	void ads_by_query(std::wstring value, short rowsCount);
 };
 

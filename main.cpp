@@ -13,13 +13,13 @@ int main()
 
 	try
 	{
-		client c("92.255.199.79", 9090);
+		client c("127.0.0.1", 9090);
 
 		c.hello();
 		// 0 is the root
 		std::wcout << L"Tree traverse:" << std::endl;
 		std::wcout << L"you can uncomment the tree traverse" << std::endl;
-		c.tree_traverse(0, 1);
+		//c.tree_traverse(0, 1);
 
 		std::wcout << std::wstring(100, L'*') << std::endl;
 		std::wcout << L"Ads by tree (1 rooms) buy:" << std::endl;
@@ -32,6 +32,14 @@ int main()
 		std::wcout << std::wstring(100, L'*') << std::endl;
 		std::wcout << L"Ads by tree (dacha) buy:" << std::endl;
 		c.ads_by_tree_index(4374, 10);
+
+		std::wcout << std::wstring(100, L'*') << std::endl;
+		std::wcout << L"Ads by query (Пушкина):" << std::endl;
+		c.ads_by_query(L"Пушкина", 10);
+
+		std::wcout << std::wstring(100, L'*') << std::endl;
+		std::wcout << L"Ads by query (9196315):" << std::endl;
+		c.ads_by_query(L"9196315", 10);
 	}
 	catch (...)
 	{
